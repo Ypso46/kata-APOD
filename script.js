@@ -5,6 +5,7 @@ const api_key = config.NASA_API_KEY;
 // localStorage.setItem('mydlénassa', 'supersecret');
 
 const fetchNASAData = async () => {
+    console.log(`${url}${api_key}&${date}`);
     try {
         const response = await fetch(`${url}${api_key}`);
         const data = await response.json();
@@ -27,22 +28,28 @@ const displayExplanation = data => {document.getElementById('explanation').inner
 
 
 var date = new Date();
-date.toDateString();
-console.log(date);
+function parseDate(date) {
+    let day = ('0' + date.getDate()).slice(-2);
+    let month = ('0' + (date.getMonth() + 1)).slice(-2);
+    let year = date.getFullYear();
+    let currentDate = `${year}-${month}-${day}`;
+    console.log(currentDate);
+    return currentDate;
+}
 
+parseDate(date);
 function changingDay() {
     document.getElementById('back').addEventListener('click', () => {
         date.setDate(date.getDate() - 1);
         console.log("Previous day");
-        console.log(date);
+        parseDate(date);
     });
     document.getElementById('next').addEventListener('click', () => {
         date.setDate(date.getDate() + 1);
         console.log("Next day");
-        console.log(date);
+        parseDate(date);
     });
 }
-
 
 changingDay();
 
