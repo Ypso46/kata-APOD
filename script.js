@@ -1,8 +1,11 @@
 const url = 'https://api.nasa.gov/planetary/apod?api_key=';
-const api_key = config.NASA_API_KEY;
+const api_key = config.NASA_API_KEY; 
+
+//TODO try to implement DEMO_KEY if config is not link with local storage
+// localStorage.setItem('mydlénassa', 'supersecret');
+
 const fetchNASAData = async () => {
     try {
-        let date = "";
         const response = await fetch(`${url}${api_key}`);
         const data = await response.json();
         console.log(data);
@@ -22,24 +25,26 @@ const displayDate = data => {document.getElementById('date').textContent = data.
 const displayPicture = data => {document.getElementById('picture').src = data.hdurl; }
 const displayExplanation = data => {document.getElementById('explanation').innerHTML = '<span id="expl">Explanation:</span> ' + data.explanation; }
 
-/*
-const date = Date();
-/*
-function getDate(date) {
-    const dateBefore = toISOString(date - 1);
+
+var date = new Date();
+date.toDateString();
+console.log(date);
+
+function changingDay() {
     document.getElementById('back').addEventListener('click', () => {
-        return dateBefore;
+        date.setDate(date.getDate() - 1);
+        console.log("Previous day");
+        console.log(date);
     });
-    if (dateAfter === date) {
-        console.log("Error");
-    } else {
-        const dateAfter = toISOString(date + 1);
-        document.getElementById('next').addEventListener('click', () => {
-            return dateAfter;
-        });
-    } 
+    document.getElementById('next').addEventListener('click', () => {
+        date.setDate(date.getDate() + 1);
+        console.log("Next day");
+        console.log(date);
+    });
 }
-*/
+
+
+changingDay();
 
 
 
