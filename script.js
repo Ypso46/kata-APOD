@@ -4,12 +4,14 @@ const api_key = config.NASA_API_KEY;
 //TODO try to implement DEMO_KEY if config is not link with local storage
 // localStorage.setItem('mydlénassa', 'supersecret');
 
+var date = new Date();
+parseDate(date);
+
 const fetchNASAData = async () => {
-    console.log(`${url}${api_key}&${date}`);
     try {
-        const response = await fetch(`${url}${api_key}`);
+        const response = await fetch(`${url}${api_key}&date=${parseDate(date)}`);
         const data = await response.json();
-        console.log(data);
+        console.log(response);
         displayTitle(data);
         displayDate(data);
         displayPicture(data);
@@ -27,7 +29,6 @@ const displayPicture = data => {document.getElementById('picture').src = data.hd
 const displayExplanation = data => {document.getElementById('explanation').innerHTML = '<span id="expl">Explanation:</span> ' + data.explanation; }
 
 
-var date = new Date();
 function parseDate(date) {
     let day = ('0' + date.getDate()).slice(-2);
     let month = ('0' + (date.getMonth() + 1)).slice(-2);
@@ -37,17 +38,18 @@ function parseDate(date) {
     return currentDate;
 }
 
-parseDate(date);
 function changingDay() {
-    document.getElementById('back').addEventListener('click', () => {
+        document.getElementById('back').addEventListener('click', () => {
         date.setDate(date.getDate() - 1);
         console.log("Previous day");
         parseDate(date);
+        fetchNASAData();
     });
-    document.getElementById('next').addEventListener('click', () => {
+        document.getElementById('next').addEventListener('click', () => {
         date.setDate(date.getDate() + 1);
         console.log("Next day");
         parseDate(date);
+        fetchNASAData();
     });
 }
 
